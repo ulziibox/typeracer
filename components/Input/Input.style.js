@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-const RacingInput = styled.input`
+const RacingInput = styled.input.attrs({
+  placeholder: "Энд бичнэ үү",
+})`
   height: 45px;
   border-radius: 10px;
   width: 100%;
