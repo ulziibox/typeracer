@@ -3,7 +3,7 @@ import RacingInput from "./Input.style";
 const Input = (props) => {
   const handleOnChange = (e) => {
     if (e.target.value.length > props.length) {
-      props.timeOut();
+      props.timeOut(e.target.value);
     } else {
       if (e.target.value.length === 1) {
         props.gameStart();
@@ -27,7 +27,6 @@ const Input = (props) => {
       onChange={handleOnChange}
       maxLength={props.length + 1}
       onKeyDown={handleEnterKey}
-      //   onInput={props.gameStart()}
     />
   );
 };

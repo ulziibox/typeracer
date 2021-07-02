@@ -18,10 +18,11 @@ const fetchQuote = () => {
     });
 };
 
-const WriteSection = (props) => {
+const WriteSection = () => {
   const [quote, setQuote] = useState([]);
   const clockRef = useRef();
   const [isStarted, setIsStarted] = useState(true);
+  let time = 0;
   //   const msg = useContext(CountdownContext);
 
   useEffect(() => {
@@ -45,10 +46,13 @@ const WriteSection = (props) => {
     clockRef.current.start();
   };
 
-  const timeOut = () => {
+  const timeOut = (userValue) => {
     console.log("Game over");
     clockRef.current.stop();
     setIsStarted(false);
+    console.log("Time:" + time);
+    WPMcalculater(time, userValue);
+    time = 0;
   };
 
   const Completionist = () => {
@@ -60,6 +64,7 @@ const WriteSection = (props) => {
       timeOut();
       return <Completionist />;
     } else {
+      time++;
       return (
         <span>
           {minutes}:{seconds}
@@ -68,12 +73,33 @@ const WriteSection = (props) => {
     }
   };
 
-  const WPMcalculater = (startTime, endTime, words) => {
-    const seconds = (endTime - startTime) / 1000;
-    const minutes = seconds / 60;
-    const userWPM = Math.floor(words / minutes);
-    console.log(userWPM);
-    return userWPM;
+  const wordsCounter = (str) => {
+    var state = 0;
+    var words = 0;
+    var i = 0;
+
+    while (i < str.length) {
+      if (str[i] == " " || str[i] == "\n" || str[i] == "\t") state = 0;
+      else if (state == 0) {
+        state = 1;
+        ++words;
+      }
+      ++i;
+    }
+    console.log("String words: " + words);
+    return words;
+  };
+
+  const WPMcalculater = (endTime, userValue) => {
+    let words = wordsCounter(userValue);
+    let userWPM;
+    if (endTime > 0) {
+      userWPM = (words * 60) / endTime;
+    } else {
+      userWPM = words * (60 / endTime);
+    }
+
+    console.log("Your CPM: " + userWPM);
   };
 
   return (
