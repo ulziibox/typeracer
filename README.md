@@ -2,6 +2,11 @@
 
 First, run the development server:
 
+1. 
+```bash
+yarn
+```
+2.
 ```bash
 yarn dev
 ```
